@@ -5,9 +5,14 @@ import { Search, Sliders } from 'lucide-react';
 interface SearchBarProps {
   onSearch: (query: string) => void;
   placeholder?: string;
+  onFilterClick?: () => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholder = 'Search for restaurants or foods...' }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ 
+  onSearch, 
+  placeholder = 'Search for restaurants or foods...', 
+  onFilterClick 
+}) => {
   const [query, setQuery] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -31,6 +36,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholder = 'Search f
         <button 
           type="button" 
           className="absolute right-4 p-1 rounded-full hover:bg-gray-100"
+          onClick={onFilterClick}
         >
           <Sliders size={20} className="text-foodapp-gray" />
         </button>

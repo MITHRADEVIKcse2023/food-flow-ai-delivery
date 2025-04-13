@@ -2,6 +2,7 @@
 import React from 'react';
 import { categories } from '@/data/mockData';
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Pizza, Coffee, Salad, Beef, IceCream, Sandwich } from 'lucide-react';
 
 interface CategoryFilterProps {
   activeCategory: string;
@@ -9,6 +10,17 @@ interface CategoryFilterProps {
 }
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({ activeCategory, onSelectCategory }) => {
+  // Map of category IDs to icon components
+  const categoryIcons: Record<string, React.ReactNode> = {
+    'pizza': <Pizza size={18} />,
+    'burger': <Beef size={18} />,
+    'sushi': <Fish size={18} />,
+    'dessert': <IceCream size={18} />,
+    'coffee': <Coffee size={18} />,
+    'salad': <Salad size={18} />,
+    'sandwich': <Sandwich size={18} />
+  };
+
   return (
     <div className="mb-8">
       <ScrollArea className="w-full whitespace-nowrap pb-4">
@@ -23,8 +35,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ activeCategory, onSelec
               }`}
               onClick={() => onSelectCategory(category.id)}
             >
-              {category.icon && (
-                <span className="mr-2">{category.icon}</span>
+              {categoryIcons[category.id] && (
+                <span className="mr-2">{categoryIcons[category.id]}</span>
               )}
               {category.name}
             </button>
