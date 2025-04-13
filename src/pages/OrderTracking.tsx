@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { Check, MapPin, Clock, Bike, Phone, MessageCircle } from 'lucide-react';
+import OrderMap from '@/components/OrderMap';
+import ChatInterface from '@/components/ChatInterface';
 
 const orderSteps = [
   { title: "Order Confirmed", description: "Your order has been received", time: "12:45 PM" },
@@ -13,6 +15,7 @@ const orderSteps = [
 
 const OrderTracking: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [showChat, setShowChat] = useState(false);
   
   // Simulates order progress
   useEffect(() => {
@@ -83,12 +86,41 @@ const OrderTracking: React.FC = () => {
               </div>
             </div>
             
-            {/* Map placeholder */}
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <div className="bg-gray-200 h-64 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin size={32} className="mx-auto mb-2 text-foodapp-gray" />
-                  <p className="text-foodapp-gray">Map view will be available here</p>
+            {/* Map integration */}
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden mb-8">
+              <OrderMap 
+                deliveryLocation={[-73.9857, 40.7484]}
+                customerLocation={[-73.9712, 40.7831]}
+              />
+            </div>
+            
+            {/* Order Details */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h2 className="text-xl font-medium mb-6">Order Details</h2>
+              <div className="divide-y">
+                <div className="py-3 flex justify-between">
+                  <span className="text-foodapp-gray">2× Chicken Burger</span>
+                  <span>$17.98</span>
+                </div>
+                <div className="py-3 flex justify-between">
+                  <span className="text-foodapp-gray">1× French Fries (Large)</span>
+                  <span>$4.99</span>
+                </div>
+                <div className="py-3 flex justify-between">
+                  <span className="text-foodapp-gray">1× Chocolate Milkshake</span>
+                  <span>$5.49</span>
+                </div>
+                <div className="py-3 flex justify-between">
+                  <span className="text-foodapp-gray">Subtotal</span>
+                  <span>$28.46</span>
+                </div>
+                <div className="py-3 flex justify-between">
+                  <span className="text-foodapp-gray">Delivery Fee</span>
+                  <span>$2.99</span>
+                </div>
+                <div className="py-3 flex justify-between font-semibold">
+                  <span>Total</span>
+                  <span>$31.45</span>
                 </div>
               </div>
             </div>
@@ -128,7 +160,7 @@ const OrderTracking: React.FC = () => {
             </div>
             
             {/* Contact options */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
               <h2 className="text-xl font-medium mb-6">Need Help?</h2>
               
               <div className="space-y-4">
@@ -137,9 +169,13 @@ const OrderTracking: React.FC = () => {
                   <span>Call Driver</span>
                 </Button>
                 
-                <Button variant="outline" className="w-full flex justify-center items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  className="w-full flex justify-center items-center gap-2"
+                  onClick={() => setShowChat(!showChat)}
+                >
                   <MessageCircle size={18} />
-                  <span>Send Message</span>
+                  <span>Message Driver</span>
                 </Button>
                 
                 <Button className="w-full bg-foodapp-primary hover:bg-foodapp-primary/90">
@@ -147,6 +183,13 @@ const OrderTracking: React.FC = () => {
                 </Button>
               </div>
             </div>
+            
+            {/* Chat Interface */}
+            {showChat && (
+              <div className="bg-white rounded-lg shadow-sm h-[400px]">
+                <ChatInterface driverName="Alex Johnson" />
+              </div>
+            )}
           </div>
         </div>
       </div>

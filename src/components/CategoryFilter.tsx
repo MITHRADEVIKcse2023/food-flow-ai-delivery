@@ -16,7 +16,11 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ activeCategory, onSelec
           {categories.map((category) => (
             <button
               key={category.id}
-              className={`category-badge ${activeCategory === category.id ? 'active' : ''}`}
+              className={`px-4 py-2 rounded-full transition-all ${
+                activeCategory === category.id 
+                  ? 'bg-foodapp-primary text-white shadow-md' 
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+              }`}
               onClick={() => onSelectCategory(category.id)}
             >
               {category.name}
