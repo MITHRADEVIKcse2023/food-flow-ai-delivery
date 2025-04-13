@@ -24,14 +24,14 @@ const RestaurantList: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-50">
       <CategoryFilter 
         activeCategory={activeCategory} 
         onSelectCategory={handleCategorySelect} 
       />
       
       {filteredRestaurants.length === 0 ? (
-        <div className="text-center py-16">
+        <div className="text-center py-16 bg-white rounded-lg shadow-sm">
           <h3 className="text-lg font-medium">No restaurants found</h3>
           <p className="text-foodapp-gray mt-2">Try another category or check back later</p>
         </div>

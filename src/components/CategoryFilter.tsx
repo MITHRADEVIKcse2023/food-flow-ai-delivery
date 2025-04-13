@@ -16,13 +16,16 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ activeCategory, onSelec
           {categories.map((category) => (
             <button
               key={category.id}
-              className={`px-4 py-2 rounded-full transition-all ${
+              className={`px-4 py-2 rounded-full transition-all flex items-center ${
                 activeCategory === category.id 
                   ? 'bg-foodapp-primary text-white shadow-md' 
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                  : 'bg-white border border-gray-200 hover:bg-gray-50 text-gray-700'
               }`}
               onClick={() => onSelectCategory(category.id)}
             >
+              {category.icon && (
+                <span className="mr-2">{category.icon}</span>
+              )}
               {category.name}
             </button>
           ))}
