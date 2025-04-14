@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { Google } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -82,7 +82,7 @@ const Login: React.FC = () => {
           onClick={handleGoogleLogin}
           disabled={loading}
         >
-          <Google size={20} />
+          <Mail size={20} />
           Google Login
         </Button>
       </div>
