@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { Mail, Home, User } from 'lucide-react';
+import { Mail, Home } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Login: React.FC = () => {
@@ -164,34 +164,6 @@ const Login: React.FC = () => {
             </svg>
             Google Login
           </Button>
-          
-          <div className="mt-8">
-            <p className="text-center text-sm text-gray-600 mb-4">Need an account?</p>
-            <Link to="/profile" className="w-full flex items-center justify-center gap-2 text-foodapp-primary hover:underline">
-              <User size={16} />
-              <span>Manage Profile</span>
-            </Link>
-          </div>
-          
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <p className="text-center text-sm font-semibold mb-4">Download Our App</p>
-            <div className="flex space-x-4">
-              <a 
-                href="#" 
-                className="flex-1 flex items-center justify-center bg-black text-white rounded-lg py-2 px-3 hover:bg-gray-800"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M12 20.94c1.5 0 2.75-.55 4.15-1.5 1.5-1.05 2.5-2.5 3.25-4.33a14.09 14.09 0 0 0 1.1-5.35c0-2.8-1.1-4.95-2.85-6.15S13.45 2 12 2s-3.35.67-5.1 1.6c-1.8 1.2-2.9 3.35-2.9 6.15 0 1.8.35 3.5 1.1 5.35.7 1.5 1.75 3.3 3.25 4.35 1.4.94 2.7 1.5 4.15 1.5Z" /><path d="M12 20.94c-1.45 0-2.75-.55-4.15-1.5a14.5 14.5 0 0 1-3.25-4.35 14.09 14.09 0 0 1-1.1-5.35c0-2.8 1.1-4.95 2.9-6.15S9.6 2 12 2s3.35.67 5.1 1.6c1.75 1.2 2.85 3.35 2.85 6.15 0 1.8-.35 3.5-1.1 5.35-.75 1.83-1.75 3.28-3.25 4.33-1.4.95-2.65 1.5-4.15 1.5Z" /></svg>
-                App Store
-              </a>
-              <a 
-                href="#" 
-                className="flex-1 flex items-center justify-center bg-black text-white rounded-lg py-2 px-3 hover:bg-gray-800"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><polygon points="6 3 20 12 6 21 6 3" /></svg>
-                Google Play
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </div>

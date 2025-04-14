@@ -2,7 +2,7 @@
 import React from 'react';
 import Layout from '@/components/Layout';
 import { Link } from 'react-router-dom';
-import { ExternalLink, ChevronRight } from 'lucide-react';
+import { ExternalLink, ChevronRight, Apple, Play } from 'lucide-react';
 
 interface LinkSectionProps {
   title: string;
@@ -48,7 +48,7 @@ const AppDownloadSection: React.FC = () => (
         href="#" 
         className="flex items-center justify-center gap-2 bg-black text-white rounded-lg py-3 px-4 hover:bg-gray-800 transition"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-apple"><path d="M12 20.94c1.5 0 2.75-.55 4.15-1.5 1.5-1.05 2.5-2.5 3.25-4.33a14.09 14.09 0 0 0 1.1-5.35c0-2.8-1.1-4.95-2.85-6.15S13.45 2 12 2s-3.35.67-5.1 1.6c-1.8 1.2-2.9 3.35-2.9 6.15 0 1.8.35 3.5 1.1 5.35.7 1.5 1.75 3.3 3.25 4.35 1.4.94 2.7 1.5 4.15 1.5Z" /><path d="M12 20.94c-1.45 0-2.75-.55-4.15-1.5a14.5 14.5 0 0 1-3.25-4.35 14.09 14.09 0 0 1-1.1-5.35c0-2.8 1.1-4.95 2.9-6.15S9.6 2 12 2s3.35.67 5.1 1.6c1.75 1.2 2.85 3.35 2.85 6.15 0 1.8-.35 3.5-1.1 5.35-.75 1.83-1.75 3.28-3.25 4.33-1.4.95-2.65 1.5-4.15 1.5Z" /><path d="M12 7v5" /><path d="M15 10h-6" /></svg>
+        <Apple size={24} />
         <div className="text-left">
           <div className="text-xs">Download on the</div>
           <div className="font-semibold">App Store</div>
@@ -58,7 +58,7 @@ const AppDownloadSection: React.FC = () => (
         href="#" 
         className="flex items-center justify-center gap-2 bg-black text-white rounded-lg py-3 px-4 hover:bg-gray-800 transition"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-play"><polygon points="6 3 20 12 6 21 6 3" /></svg>
+        <Play size={24} />
         <div className="text-left">
           <div className="text-xs">GET IT ON</div>
           <div className="font-semibold">Google Play</div>

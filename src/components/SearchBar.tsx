@@ -20,6 +20,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
     onSearch(query);
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+    onSearch(newQuery); // Immediately trigger search as user types
+  };
+
   return (
     <form onSubmit={handleSubmit} className="relative w-full">
       <div className="relative flex items-center">
@@ -31,7 +37,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           className="w-full pl-12 pr-12 py-3 bg-white border border-gray-200 rounded-full focus:outline-none focus:border-foodapp-primary shadow-sm"
           placeholder={placeholder}
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={handleInputChange}
         />
         <button 
           type="button" 
