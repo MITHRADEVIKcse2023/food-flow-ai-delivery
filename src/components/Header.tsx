@@ -1,15 +1,20 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ShoppingBag, Menu, X, MapPin } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ShoppingBag, Menu, X, MapPin, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import CartDrawer from './CartDrawer';
+import { useAuth } from '@/context/AuthContext';
+import NotificationsMenu from './NotificationsMenu';
+import { toast } from 'sonner';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { cart } = useCart();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
@@ -19,6 +24,16 @@ const Header: React.FC = () => {
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success('Signed out successfully');
+    navigate('/login');
+  };
+
+  const handleSignIn = () => {
+    navigate('/login');
   };
 
   return (
@@ -47,11 +62,16 @@ const Header: React.FC = () => {
                 <li>
                   <Link to="/orders" className="text-foodapp-dark hover:text-foodapp-primary">Orders</Link>
                 </li>
+                <li>
+                  <Link to="/quick-links" className="text-foodapp-dark hover:text-foodapp-primary">Quick Links</Link>
+                </li>
               </ul>
             </nav>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {user && <NotificationsMenu />}
+            
             <Button 
               variant="outline" 
               size="sm" 
@@ -62,13 +82,26 @@ const Header: React.FC = () => {
               Cart {totalItems > 0 && <span className="bg-foodapp-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">{totalItems}</span>}
             </Button>
 
-            <Button
-              variant="default"
-              size="sm"
-              className="hidden md:flex bg-foodapp-primary hover:bg-foodapp-primary/90"
-            >
-              Sign In
-            </Button>
+            {user ? (
+              <Button
+                variant="default"
+                size="sm"
+                onClick={handleSignOut}
+                className="hidden md:flex items-center gap-2 bg-foodapp-primary hover:bg-foodapp-primary/90"
+              >
+                <LogOut size={16} />
+                Sign Out
+              </Button>
+            ) : (
+              <Button
+                variant="default"
+                size="sm"
+                onClick={handleSignIn}
+                className="hidden md:flex bg-foodapp-primary hover:bg-foodapp-primary/90"
+              >
+                Sign In
+              </Button>
+            )}
 
             <button
               onClick={toggleCart}
@@ -108,13 +141,28 @@ const Header: React.FC = () => {
           <Link to="/orders" className="block py-2 text-foodapp-dark" onClick={() => setIsMenuOpen(false)}>
             Orders
           </Link>
-          <Button
-            variant="default"
-            size="sm"
-            className="w-full mt-4 bg-foodapp-primary hover:bg-foodapp-primary/90"
-          >
-            Sign In
-          </Button>
+          <Link to="/quick-links" className="block py-2 text-foodapp-dark" onClick={() => setIsMenuOpen(false)}>
+            Quick Links
+          </Link>
+          {user ? (
+            <Button
+              variant="default"
+              size="sm"
+              onClick={handleSignOut}
+              className="w-full mt-4 bg-foodapp-primary hover:bg-foodapp-primary/90"
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <Button
+              variant="default"
+              size="sm"
+              onClick={handleSignIn}
+              className="w-full mt-4 bg-foodapp-primary hover:bg-foodapp-primary/90"
+            >
+              Sign In
+            </Button>
+          )}
         </div>
       )}
       

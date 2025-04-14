@@ -4,7 +4,12 @@ import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { Check, MapPin, Clock, Bike, Phone, MessageCircle } from 'lucide-react';
 import OrderMap from '@/components/OrderMap';
-import ChatInterface from '@/components/ChatInterface';
+import EnhancedChatInterface from '@/components/EnhancedChatInterface';
+import { useAuth } from '@/context/AuthContext';
+import { useNotifications } from '@/hooks/useNotifications';
+
+// Simulated driver ID for this example
+const DRIVER_ID = "driver-123";
 
 const orderSteps = [
   { title: "Order Confirmed", description: "Your order has been received", time: "12:45 PM" },
@@ -16,17 +21,41 @@ const orderSteps = [
 const OrderTracking: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showChat, setShowChat] = useState(false);
+  const { user } = useAuth();
+  const { createNotification } = useNotifications();
   
-  // Simulates order progress
+  // Simulates order progress and sends notifications
   useEffect(() => {
+    if (!user) return;
+
+    const statusUpdates = [
+      { title: "Order update", message: "Your order is being prepared" },
+      { title: "Driver update", message: "Alex has picked up your order" },
+      { title: "Delivery update", message: "Alex is 5 minutes away" },
+    ];
+
     const timer = setTimeout(() => {
       if (currentStep < orderSteps.length - 1) {
         setCurrentStep(currentStep + 1);
+        
+        // Send a notification when the order status changes
+        if (currentStep < statusUpdates.length) {
+          createNotification(
+            statusUpdates[currentStep].title,
+            statusUpdates[currentStep].message
+          );
+        }
       }
     }, 10000); // Advance to next step every 10 seconds
     
     return () => clearTimeout(timer);
-  }, [currentStep]);
+  }, [currentStep, user, createNotification]);
+
+  // Function to simulate adding more food items
+  const handleAddMoreFood = () => {
+    // In a real app, this would redirect to the restaurant menu
+    window.location.href = '/restaurants';
+  };
 
   return (
     <Layout>
@@ -96,7 +125,16 @@ const OrderTracking: React.FC = () => {
             
             {/* Order Details */}
             <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-medium mb-6">Order Details</h2>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-medium">Order Details</h2>
+                <Button 
+                  variant="outline" 
+                  className="text-foodapp-primary border-foodapp-primary" 
+                  onClick={handleAddMoreFood}
+                >
+                  Add More Food
+                </Button>
+              </div>
               <div className="divide-y">
                 <div className="py-3 flex justify-between">
                   <span className="text-foodapp-gray">2× Chicken Burger</span>
@@ -184,10 +222,13 @@ const OrderTracking: React.FC = () => {
               </div>
             </div>
             
-            {/* Chat Interface */}
+            {/* Enhanced Chat Interface */}
             {showChat && (
               <div className="bg-white rounded-lg shadow-sm h-[400px]">
-                <ChatInterface driverName="Alex Johnson" />
+                <EnhancedChatInterface 
+                  driverName="Alex Johnson"
+                  driverId={DRIVER_ID}
+                />
               </div>
             )}
           </div>
