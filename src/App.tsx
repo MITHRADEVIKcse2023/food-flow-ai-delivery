@@ -14,6 +14,7 @@ import Checkout from "./pages/Checkout";
 import OrderTracking from "./pages/OrderTracking";
 import NotFound from "./pages/NotFound";
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 import QuickLinks from './pages/QuickLinks';
 import { useEffect } from 'react';
 
@@ -72,6 +73,11 @@ const App = () => (
             <Route path="/quick-links" element={<QuickLinks />} />
             
             {/* Protected routes */}
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
             <Route path="/orders" element={
               <ProtectedRoute>
                 <Orders />
