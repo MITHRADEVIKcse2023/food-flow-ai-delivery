@@ -1,10 +1,7 @@
-
 import React from 'react';
 import { categories } from '@/data/mockData';
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Pizza, Coffee, Salad, Beef, IceCream, Sandwich } from 'lucide-react';
-// Import a suitable replacement icon since Fish doesn't exist in lucide-react
-import { Fish as FishIcon } from 'lucide-react';
+import { Pizza, Coffee, Salad, Beef, IceCream, Sandwich, Fish } from 'lucide-react';
 
 interface CategoryFilterProps {
   activeCategory: string;
@@ -16,7 +13,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ activeCategory, onSelec
   const categoryIcons: Record<string, React.ReactNode> = {
     'pizza': <Pizza size={18} />,
     'burger': <Beef size={18} />,
-    'sushi': <FishIcon size={18} />,  // Changed to FishIcon alias
+    'sushi': <Fish size={18} />,
     'dessert': <IceCream size={18} />,
     'coffee': <Coffee size={18} />,
     'salad': <Salad size={18} />,
