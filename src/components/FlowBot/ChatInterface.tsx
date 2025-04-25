@@ -29,6 +29,7 @@ const ChatInterface: React.FC = () => {
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [processingInput, setProcessingInput] = useState(false); // New state to prevent rapid submissions
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
 
@@ -42,7 +43,7 @@ const ChatInterface: React.FC = () => {
   };
 
   const handleSendMessage = async () => {
-    if (!inputText.trim()) return;
+    if (!inputText.trim() || isLoading || processingInput) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -54,6 +55,7 @@ const ChatInterface: React.FC = () => {
     setMessages(prev => [...prev, userMessage]);
     setInputText('');
     setIsLoading(true);
+    setProcessingInput(true); // Prevent multiple submissions
 
     try {
       // Call the LLaMA 3 endpoint through Supabase Edge Function
@@ -97,11 +99,18 @@ const ChatInterface: React.FC = () => {
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
+      // Allow new submissions after a small delay to prevent accidental double-sends
+      setTimeout(() => {
+        setProcessingInput(false);
+      }, 500);
     }
   };
 
   const handleSuggestionClick = (suggestion: string) => {
+    if (isLoading || processingInput) return;
+    
     setInputText(suggestion);
+    // Use setTimeout to ensure inputText is updated before sending
     setTimeout(() => {
       handleSendMessage();
     }, 100);
@@ -134,7 +143,7 @@ const ChatInterface: React.FC = () => {
       
       if (error) throw error;
       
-      if (data.text) {
+      if (data?.text) {
         setInputText(data.text);
       }
 
@@ -213,6 +222,7 @@ const ChatInterface: React.FC = () => {
             variant="outline"
             onClick={toggleRecording}
             className="rounded-full"
+            disabled={isLoading || processingInput}
           >
             {isRecording ? <MicOff size={20} /> : <Mic size={20} />}
           </Button>
@@ -223,14 +233,14 @@ const ChatInterface: React.FC = () => {
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Ask FlowBot anything..."
             className="flex-grow border rounded-full px-4 py-2 focus:outline-none focus:ring-1 focus:ring-foodapp-primary"
-            disabled={isLoading}
+            disabled={isLoading || processingInput}
           />
           
           <Button
             type="submit"
             size="icon"
             className="rounded-full bg-foodapp-primary hover:bg-foodapp-primary/90"
-            disabled={isLoading || !inputText.trim()}
+            disabled={isLoading || processingInput || !inputText.trim()}
           >
             {isLoading ? <Loader size={20} className="animate-spin" /> : <Send size={20} />}
           </Button>
