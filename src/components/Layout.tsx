@@ -3,6 +3,7 @@ import React from 'react';
 import Header from './Header';
 import { Toaster } from "@/components/ui/sonner";
 import { CartProvider } from '@/context/CartContext';
+import ChatButton from './FlowBot/ChatButton';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -56,6 +57,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
           </div>
         </footer>
+        <ChatButton />
         <Toaster />
       </div>
     </CartProvider>
